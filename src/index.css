@@ -1,0 +1,386 @@
+/* ==========================================================================
+   1. MODERN RESET & DESIGN TOKENS
+   ========================================================================== */
+@layer reset, tokens, base, components;
+
+@layer tokens {
+  :root {
+    --bg-gradient: linear-gradient(135deg, #ffffff, #ffffff);
+    --btn-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
+    
+    /* Semantic Colors */
+    --color-primary: #2575fc;
+    --color-text-main: #333;
+    --color-text-muted: #666;
+    --color-border: #d6d6d6;
+    
+    /* Status Colors */
+    --color-success: #22c55e;
+    --color-error: #ef4444;
+    --color-info: #3b82f6;
+    --color-warning: #f59e0b;
+    --color-danger-hover: #c82333;
+    
+    /* Layout Tokens */
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --shadow-main: 0 15px 35px rgba(0, 0, 0, 0.25);
+    --transition-smooth: 0.3s ease;
+  }
+}
+
+@layer reset {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--bg-gradient);
+  }
+
+  body {
+    display: grid;
+    place-items: center; /* Modern shorthand for centering flex items */
+  }
+
+  input, button {
+    font: inherit; /* Prevents default browser font overrides */
+  }
+}
+
+/* ==========================================================================
+   2. COMPONENTS (Using Native CSS Nesting)
+   ========================================================================== */
+@layer components {
+  
+  /* Layout Card Container */
+  .container {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-main);
+    animation: fadeIn 0.5s ease forwards;
+
+    & h1, & h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: var(--color-text-main);
+    }
+
+    & form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    & div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    & input {
+      padding: 13px 15px;
+      font-size: 16px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      transition: var(--transition-smooth);
+      outline: none;
+
+      &:focus {
+        border-color: #6a11cb;
+        box-shadow: 0 0 8px rgba(106, 17, 203, 0.25);
+      }
+
+      &::placeholder {
+        color: #999;
+      }
+    }
+  }
+
+  /* Typography Elements */
+  label {
+    font-size: 15px;
+    margin-bottom: 6px;
+    color: #444;
+    font-weight: 600;
+  }
+
+  span {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+
+    & a {
+      margin-left: 5px;
+    }
+  }
+
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .welcome-text {
+    text-align: center;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 20px 0;
+  }
+
+  /* Utility Alerts */
+  .error, .success {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  .error { color: var(--color-error); }
+  .success { color: var(--color-success); }
+
+  /* Buttons & Layout Groups */
+  .btn-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+
+    & a {
+      flex: 1;
+    }
+  }
+
+  /* Modern Unified Button Implementation */
+  button, 
+  [class$="-btn"] { /* Targets any class ending in "-btn" */
+    padding: 12px 22px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    text-align: center;
+    color: white;
+
+    &:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1); /* Native way to handle hovers without hardcoded colors */
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  /* Main Call to Action Button */
+  button:not([class]) {
+    width: 100%;
+    background: var(--btn-gradient);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    &:hover {
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  /* Contextual Button Variants using CSS variables */
+  .start-btn   { background: var(--color-success); }
+  .stop-btn    { background: var(--color-error); }
+  .lap-btn     { background: var(--color-info); }
+  .reset-btn   { background: var(--color-warning); }
+  .logout-btn  { background: var(--color-error); }
+
+  /* ==========================================================================
+     3. STOPWATCH SPECIFIC STYLES
+     ========================================================================== */
+  .stopwatch {
+    text-align: center;
+
+    & h1 {
+      font-size: clamp(2.5rem, 8vw, 3.25rem); /* Responsive typography based on screen width */
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #222;
+      margin: 25px 0;
+    }
+  }
+
+  .controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+    
+    /* Clean fix for removing margin inside grid setups */
+    & > * { margin: 0; } 
+  }
+
+  .laps {
+    max-height: 220px;
+    overflow-y: auto;
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    scrollbar-width: thin; /* Modern cross-browser scrollbar styling */
+  }
+
+  .lap {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 5px;
+    border-bottom: 1px solid #eee;
+  }
+}
+
+/* ==========================================================================
+   4. ANIMATIONS
+   ========================================================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* =========================
+   DARK MODE
+========================= */
+
+body {
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark {
+    background: #180046;
+    color: #ffffff;
+}
+
+body.dark .container {
+    background: #1f1f1f;
+    color: #ffffff;
+}
+
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark p,
+body.dark label,
+body.dark span {
+    color: #ffffff;
+}
+
+body.dark input {
+    background: #2c2c2c;
+    color: white;
+    border: 1px solid #555;
+}
+
+body.dark input::placeholder {
+    color: #aaa;
+}
+
+body.dark .laps {
+    border-top: 1px solid #444;
+}
+
+body.dark .lap {
+    border-bottom: 1px solid #444;
+}
+
+/* =========================
+   THEME TOGGLE
+========================= */
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 64px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #d1d5db;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.35s ease;
+    margin: 0;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    left: 4px;
+    top: 4px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.35s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.switch input:checked + .slider {
+    background: #6366f1;
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(30px);
+}
+
+/* Optional icons */
+
+.slider::after {
+    content: "☀";
+    position: absolute;
+    right: 9px;
+    top: 7px;
+    font-size: 12px;
+    color: white;
+    transition: 0.35s;
+}
+
+.switch input:checked + .slider::after {
+    content: "🌙";
+    left: 9px;
+    right: auto;
+}
+
+/* =========================
+   FIX FOR GLOBAL SPAN RULE
+========================= */
+
+.form-footer {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.form-footer a {
+    margin-left: 5px;
+}
