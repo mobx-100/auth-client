@@ -95,7 +95,7 @@ function Home({ darkMode, setDarkMode }) {
     <span className="slider"></span>
   </label>
 </div>
-    <div>
+    <div className="home-page">
       <div
         style={{
           width: "500px",
