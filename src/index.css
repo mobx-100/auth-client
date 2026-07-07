@@ -43,12 +43,9 @@
     background: var(--bg-gradient);
   }
 
-  body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: "Segoe UI", system-ui, sans-serif;
-    background: var(--bg-gradient);
-    overflow-x: hidden;
+ body {
+    display: grid;
+    place-items: center;
 }
 
   input, button {
@@ -388,70 +385,3 @@ body.dark .lap {
     margin-left: 5px;
 }
 
-/* ===========================
-   HOME PAGE LAYOUT
-=========================== */
-
-.home-page{
-    width:100%;
-    min-height:100vh;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    padding:40px 20px;
-}
-
-/* Stopwatch Card */
-.home-page > div{
-    width:100%;
-    max-width:550px;
-}
-
-/* Timer */
-.stopwatch h1,
-.home-page h1{
-    font-size:3rem;
-    font-family:monospace;
-    margin:30px 0;
-}
-
-/* Buttons */
-.home-page button{
-    transition:.25s;
-}
-
-.home-page button:hover{
-    transform:translateY(-2px);
-}
-
-/* Lap List */
-.home-page .lap-list{
-    max-height:220px;
-    overflow-y:auto;
-}
-
-.home-page::-webkit-scrollbar{
-    width:8px;
-}
-
-.home-page::-webkit-scrollbar-thumb{
-    background:#bbb;
-    border-radius:10px;
-}
-
-/* Responsive */
-
-@media(max-width:600px){
-
-    .home-page{
-        padding:20px;
-    }
-
-    .home-page > div{
-        width:100% !important;
-        padding:25px !important;
-    }
-
-}
