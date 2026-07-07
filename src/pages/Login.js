@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import { handleError, handleSuccess } from '../utils';
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Login({ darkMode, setDarkMode }) {
     const [loginInfo, setLoginInfo] = useState({
@@ -26,7 +27,7 @@ function Login({ darkMode, setDarkMode }) {
             return handleError('email and password are required')
         }
         try {
-            const url = `http://localhost:8080/auth/login`;
+            const url = `${API_URL}/auth/login`;
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
