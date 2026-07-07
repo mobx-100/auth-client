@@ -35,7 +35,7 @@ function Home({ darkMode, setDarkMode }) {
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [running]);
+  }, [running,time]);
 
   const formatTime = (ms) => {
     const hours = Math.floor(ms / 3600000);
