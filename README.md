@@ -1,55 +1,50 @@
-# JWT Authentication with Stopwatch
+# Authentication-Based Stopwatch Timer
 
-A full-stack authentication application built using the MERN stack that implements secure user authentication with JWT (JSON Web Tokens). After successful login, users can access a protected dashboard containing a fully functional stopwatch with millisecond precision, including Start, Stop, Reset, and Lap features.
+A full-stack MERN application that implements secure user authentication using JWT and provides a protected stopwatch dashboard. Users must register and log in before accessing the stopwatch. The application includes all required stopwatch functionalities along with a Dark/Light Theme Toggle as an additional feature. :contentReference[oaicite:1]{index=1}
 
 ---
 
 ## Features
 
 ### Authentication
-
 - User Registration
 - User Login
-- Password hashing using bcrypt
-- JWT Access Token authentication
-- Refresh Token support
-- Protected API routes
-- Automatic token verification
-- Secure logout
+- JWT-based Authentication
+- Password Hashing using bcrypt
+- Protected Dashboard
+- Secure Logout
 
----
-
-### Stopwatch Dashboard
-
-Accessible only after successful authentication.
-
-Features include:
-
+### Stopwatch
 - Start
 - Stop
+- Resume
 - Reset
-- Lap recording
-- Millisecond precision
-- Real-time timer updates
+- Lap Recording
+- Millisecond Precision
+
+### Additional Feature
+- 🌙 Dark / Light Theme Toggle
 
 ---
 
 ## Tech Stack
 
 ### Frontend
-
-- React
+- React.js
 - React Router
+- CSS3
 - Axios
-- CSS
 
 ### Backend
-
 - Node.js
 - Express.js
+
+### Database
 - MongoDB
 - Mongoose
-- JWT (jsonwebtoken)
+
+### Authentication
+- JSON Web Tokens (JWT)
 - bcryptjs
 
 ---
@@ -57,19 +52,24 @@ Features include:
 ## Project Structure
 
 ```
-.
-├── backend
-│   ├── models
-│   ├── routes
-│   ├── middleware
-│   ├── utils
-│   └── server.js
+Authentication-Stopwatch/
 │
-├── frontend
-│   ├── components
-│   ├── pages
-│   ├── services
-│   └── App.js
+├── backend/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   ├── server.js
+│   └── package.json
+│
+├── frontend/
+│   ├── src/
+│   │   ├── Components/
+│   │   ├── Pages/
+│   │   ├── services/
+│   │   ├── App.js
+│   │   └── main.jsx
+│   └── package.json
 │
 └── README.md
 ```
@@ -78,34 +78,35 @@ Features include:
 
 ## Authentication Flow
 
-1. User signs up with a username, email, and password.
-2. Password is securely hashed before storage.
+1. User creates an account.
+2. Password is hashed before being stored in MongoDB.
 3. User logs in with valid credentials.
-4. Server issues:
-   - Access Token
-   - Refresh Token
-5. Protected routes verify the Access Token.
-6. When the Access Token expires, a new one can be generated using the Refresh Token.
-7. User can securely log out.
+4. Server generates a JWT Access Token (and Refresh Token if configured).
+5. Protected routes verify the token before granting access.
+6. Unauthorized users attempting to access the dashboard are redirected to the login page.
+7. Logout removes the authentication token and redirects the user to the landing page.
 
 ---
 
 ## Stopwatch Features
 
-- High-resolution timer
-- Start and Stop functionality
+The protected dashboard includes a stopwatch with:
+
+- Start timer
+- Stop timer
+- Resume from paused time
 - Reset timer
-- Record unlimited lap times
-- Responsive user interface
+- Record lap times
+- Display elapsed time with millisecond precision
 
 ---
 
 ## Installation
 
-### Clone Repository
+### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/jwt-auth-stopwatch.git
+git clone https://github.com/your-username/authentication-stopwatch.git
 ```
 
 ### Backend
@@ -136,24 +137,18 @@ PORT=5000
 MONGO_URI=your_mongodb_connection_string
 
 JWT_SECRET=your_jwt_secret
-
-ACCESS_TOKEN_SECRET=your_access_secret
-
-REFRESH_TOKEN_SECRET=your_refresh_secret
 ```
 
 ---
 
 ## API Endpoints
 
-### Authentication
-
 | Method | Endpoint | Description |
 |---------|----------|-------------|
 | POST | `/api/auth/signup` | Register a new user |
-| POST | `/api/auth/login` | Login user |
-| POST | `/api/auth/refresh` | Generate new Access Token |
+| POST | `/api/auth/login` | Authenticate user |
 | POST | `/api/auth/logout` | Logout user |
+| GET | `/api/auth/profile` | Get authenticated user details |
 
 ---
 
@@ -163,31 +158,35 @@ REFRESH_TOKEN_SECRET=your_refresh_secret
 /dashboard
 ```
 
-Only authenticated users with a valid JWT Access Token can access the stopwatch dashboard.
+Only authenticated users with a valid JWT token can access the stopwatch dashboard.
+
+---
+
+## Screens
+
+- Landing Page
+- Sign Up
+- Login
+- Protected Dashboard
+- Stopwatch
+- Theme Toggle
 
 ---
 
 ## Future Improvements
 
-- Email verification
-- Forgot password
 - Remember Me functionality
-- Profile management
-- Persistent stopwatch history
-- Dark/Light mode
-- Unit testing
+- Password Reset
+- User Profile
+- Save Stopwatch History
+- Mobile-first enhancements
 
 ---
 
 ## Author
-
 **Gaurav Gupta**
-
-B.Tech, Chemical Engineering and Technology  
-Indian Institute of Technology (BHU), Varanasi
-
 ---
 
 ## License
 
-This project is licensed under the MIT License.
+This project is intended for educational purposes.
